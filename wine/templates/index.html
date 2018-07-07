@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Appelation</title>
+</head>
+
+<body>
+    <div style="width:100%; overflow:hidden;">
+        <div style="width:250px; float:left">
+            <h4>Wine Appelations :</h4>
+            <select multiple>
+                {% for appelation in object_list %}
+                <option value={{appelation.id}}>{{appelation.name}}</option>
+                {% endfor%}
+            </select>
+        </div>
+        <div style="margin-left: 0px;">
+            <h4>Wine Region :</h4>
+            <select multiple>
+                    {% for region in object_list %}
+                    <option value={{region.id}}>{{region.name}}</option>
+                    {% endfor%}
+            </select>
+        </div>
+
+    </div>
+</body>
+
+</html>
