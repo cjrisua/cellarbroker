@@ -11,7 +11,7 @@
         <div style="width:250px; float:left">
             <h4>Wine Appelations :</h4>
             <select multiple>
-                {% for appelation in object_list %}
+                {% for appelation in appelations %}
                 <option value={{appelation.id}}>{{appelation.name}}</option>
                 {% endfor%}
             </select>
@@ -19,9 +19,9 @@
         <div style="margin-left: 0px;">
             <h4>Wine Region :</h4>
             <select multiple>
-                    {% for region in object_list %}
-                    <option value={{region.id}}>{{region.name}}</option>
-                    {% endfor%}
+                {% for region in regions %}
+                <option value={{region.id}}>{{region.name}}</option>
+                {% endfor%}
             </select>
         </div>
 
