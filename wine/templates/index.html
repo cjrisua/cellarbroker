@@ -7,11 +7,12 @@
 </head>
 
 <body>
+    
     <div style="width:100%; overflow:hidden;">
         <div style="width:250px; float:left">
             <h4>Wine Appelations :</h4>
             <select multiple>
-                {% for appelation in appelations %}
+                {% for appelation in object_list %}
                 <option value={{appelation.id}}>{{appelation.name}}</option>
                 {% endfor%}
             </select>

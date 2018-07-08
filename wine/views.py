@@ -1,22 +1,16 @@
-from django.views.generic.list import ListView
+from django.utils import timezone
+from django.views.generic import ListView
+
+
 from wine.models import Appelation, Region
 
 
 # Create your views here.
-
 class ListAppelationView(ListView):
-    #model=Region
+    model = Appelation
     template_name='index.html'
-    #context_object_name='regions'
 
-    def get_context_data(slfe, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['appelations'] = Appelation
+        context['regions'] = Region.objects.all()
         return context
-
-#class ListAppelationView(ListView):
-#    model=Appelation
-#    template_name='index.html'
-#    context_object_name='appelations'
-
-
