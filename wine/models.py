@@ -40,7 +40,7 @@ class GrapeFlavorProfile(models.Model):
     dmnt_flavors = models.TextField(blank=True, null=True)  # This field type is a guess.
 
     def __str__(self):
-        return self.name
+        return self.id
 
 
 class Region(models.Model):
