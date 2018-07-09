@@ -1,32 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Appelation</title>
-</head>
-
-<body>
-    
-    <div style="width:100%; overflow:hidden;">
-        <div style="width:250px; float:left">
-            <h4>Wine Appelations :</h4>
-            <select multiple>
-                {% for appelation in object_list %}
-                <option value={{appelation.id}}>{{appelation.name}}</option>
-                {% endfor%}
-            </select>
-        </div>
-        <div style="margin-left: 0px;">
-            <h4>Wine Region :</h4>
-            <select multiple>
-                {% for region in regions %}
-                <option value={{region.id}}>{{region.name}}</option>
-                {% endfor%}
-            </select>
-        </div>
-
-    </div>
-</body>
-
-</html>
+    {% if country_list %}
+        <table>
+            <tr>
+                <th>County Name</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        <tbody>
+        {% for country in country_list %}
+            <tr>
+                <td>{{country.name}}</td>
+                <td><a href="{% url 'wine:country-update' country.id %}">edit</a></td>
+                <td><a href="{% url 'wine:country-delete' country.id %}">delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    {% else %}
+        <h1>No product entries found on the database.</h1>
+     
+    {% endif %}
+    <a href="{% url 'wine:country-entry'  %}">Add County</a>

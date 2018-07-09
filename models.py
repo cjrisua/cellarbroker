@@ -13,18 +13,16 @@ class Appelation(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
     regionid = models.IntegerField(blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'appelation'
+    def __str__(self):
+        return self.name
 
 
 class Country(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=25, blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'country'
+    def __str__(self):
+        return self.name
 
 
 
@@ -32,9 +30,8 @@ class Country(models.Model):
 class Flavor(models.Model):
     name = models.CharField(max_length=25, blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'flavor'
+    def __str__(self):
+        return self.name
 
 
 class GrapeFlavorProfile(models.Model):
@@ -43,28 +40,27 @@ class GrapeFlavorProfile(models.Model):
     grapeid = models.IntegerField(blank=True, null=True)
     dmnt_flavors = models.TextField(blank=True, null=True)  # This field type is a guess.
 
-    class Meta:
-        managed = False
-        db_table = 'grape_flavor_profile'
+    def __str__(self):
+        return self.name
 
 
 class Region(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=25, blank=True, null=True)
     parent_regionid = models.IntegerField(blank=True, null=True)
+    countryid = models.IntegerField(blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'region'
+    def __str__(self):
+        return self.name
 
 
 class Variety(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
 
-    class Meta:
-        managed = False
-        db_table = 'variety'
+    def __str__(self):
+        return self.name
+
 
 
 class Vineyard(models.Model):
@@ -72,6 +68,6 @@ class Vineyard(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     regionid = models.IntegerField(blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'vineyard'
+    def __str__(self):
+        return self.name
+
