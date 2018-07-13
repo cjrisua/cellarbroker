@@ -6,6 +6,7 @@ app_name = 'wine'
 urlpatterns = [
     #path('', ListAppelationView.as_view(), name='index'),
     path('', views.IndexView.as_view(), name='index'),
+    path('appelation/view', views.AppelationView.as_view(), name='appelation-view'),
     path('models/table', views.ListTables, name='models-table'),
     path('country/entry',views.CountryEntry.as_view(),name='country-entry'),
     path('country/update/<int:pk>',views.CountryUpdate.as_view(),name='country-update'),

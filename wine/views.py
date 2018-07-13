@@ -33,6 +33,14 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return Country.objects.all()
 
+class AppelationView(generic.ListView):
+    # name of the object to be used in the index.html
+    context_object_name = 'appelation_list'
+    template_name = 'index.html'
+ 
+    def get_queryset(self):
+        return Appelation.objects.all()
+
 # view for the product entry page
 class CountryEntry(CreateView):
     model = Country
