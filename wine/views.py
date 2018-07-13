@@ -18,11 +18,11 @@ from django.apps import apps
 #        context['regions'] = Region.objects.all()
 #        return context
 
-class ListTables(generic.ListView):
+class ListTables():
     context_object_name = 'wine_tables_list'
     template_name = 'models-table.html'
  
-    def get_queryset(self):
+    def get_table_names():
         return list(filter(lambda n: 'wine' in n, map(lambda x: x._meta.db_table, apps.get_models('wine'))))
 
 class IndexView(generic.ListView):
