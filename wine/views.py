@@ -5,6 +5,8 @@ from django.urls import reverse_lazy
 
 from wine.models import Appelation, Region, Country
 
+from django.contrib.admin.sites import AlreadyRegistered
+from django.apps import apps
 
 # Create your views here.
 #class ListAppelationView(ListView):
@@ -15,6 +17,13 @@ from wine.models import Appelation, Region, Country
 #        context = super().get_context_data(**kwargs)
 #        context['regions'] = Region.objects.all()
 #        return context
+
+class ListTables(generic.ListView):
+    context_object_name = 'wine_tables_list'
+    template_name = 'models-table.html'
+ 
+    def get_queryset(self):
+        return list(filter(lambda n: 'wine' in n, map(lambda x: x._meta.db_table, apps.get_models('wine'))))
 
 class IndexView(generic.ListView):
     # name of the object to be used in the index.html
