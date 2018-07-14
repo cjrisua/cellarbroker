@@ -50,6 +50,7 @@ class RegionEntry(CreateView):
     # the fields mentioned below become the entry rows in the generated form
     fields = ['name']
 
+
 class AppelationView(generic.ListView):
     # name of the object to be used in the index.html
     context_object_name = 'appelation_list'
@@ -57,6 +58,14 @@ class AppelationView(generic.ListView):
  
     def get_queryset(self):
         return Appelation.objects.all()
+
+# view for the product entry page
+class AppelationEntry(CreateView):
+    model = Region
+    template_name='region_form.html'
+    # the fields mentioned below become the entry rows in the generated form
+    fields = ['name','country']
+
 
 # view for the product entry page
 class CountryEntry(CreateView):
