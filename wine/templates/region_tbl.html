@@ -1,0 +1,28 @@
+{% if region_list.rowcount > 0 %}
+    <h4>Table Wine Region {{region_list.count}}</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Region Name</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for region in region_list.data %}
+            <tr>
+                <td>{{region.name}}</td>
+                <td>
+                    <a href="{% url 'wine:country-update' region.id %}" class="badge badge-light">edit</a>
+                </td>
+                <td>
+                    <a href="{% url 'wine:country-delete' region.id %}" class="badge badge-warning">delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{%else%}
+    <h1>No product entries found on the database.</h1>
+{% endif %}
+    <a href="{% url 'wine:region-entry' %}" class="badge badge-primary">Add Region</a>

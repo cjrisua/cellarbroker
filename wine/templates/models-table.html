@@ -2,10 +2,17 @@
 {% if tables %}
  {%for t in tables%}
  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
-    <a class="nav-link" href="{{t.view}}" >
+    {% if t.view == 'appelation-view' %}
+      <a class="nav-link" href="{% url 'wine:appelation-view' %}" >
+    {% elif t.view == 'country-view' %}
+          <a class="nav-link" href="{% url 'wine:index' %}" >
+    {% elif t.view == 'region-view' %}
+              <a class="nav-link" href="{% url 'wine:region-view' %}" >
+    {%endif%}
       <i class="fa fa-fw fa-table"></i>
       <span class="nav-link-text">{{t.name}}</span>
     </a>
+    
   </li>
  {% endfor %}
 {% endif %}

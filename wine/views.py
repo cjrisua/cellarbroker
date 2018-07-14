@@ -33,6 +33,23 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return Country.objects.all()
 
+class RegionView(generic.ListView):
+    # name of the object to be used in the index.html
+    context_object_name = 'region_list'
+    template_name = 'index.html'
+ 
+    def get_queryset(self):
+        data = Region.objects.all()
+        return { 'rowcount' : len(data),
+                 'data' : data ,}
+
+# view for the product entry page
+class RegionEntry(CreateView):
+    model = Region
+    template_name='region_form.html'
+    # the fields mentioned below become the entry rows in the generated form
+    fields = ['name']
+
 class AppelationView(generic.ListView):
     # name of the object to be used in the index.html
     context_object_name = 'appelation_list'
