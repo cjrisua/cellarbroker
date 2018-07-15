@@ -1,4 +1,4 @@
-{% if appelation_list.count > 0 %}
+{% if appelation_list.rowcount > 0 %}
     <h4>Table Wine Appelation {{appelation_list.count}}</h4>
     <table class="table table-striped">
         <thead>
@@ -9,7 +9,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for appelation in appelation_list %}
+            {% for appelation in appelation_list.data %}
             <tr>
                 <td>{{appelation.name}}</td>
                 <td>

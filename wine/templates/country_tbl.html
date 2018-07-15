@@ -1,4 +1,4 @@
-{% if country_list.count > 0 %}
+{% if country_list.rowcount > 0 %}
     <h4>Table Wine Country</h4>
     <table class="table table-striped">
         <thead>
@@ -9,7 +9,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for country in country_list %}
+            {% for country in country_list.data %}
             <tr>
                 <td>{{country.name}}</td>
                 <td>

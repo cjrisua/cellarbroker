@@ -8,6 +8,42 @@ from wine.models import Appelation, Region, Country
 from django.contrib.admin.sites import AlreadyRegistered
 from django.apps import apps
 
+from .forms import AppelationForm
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.db.models import Q
+
+def load_regions(request):
+    countryid = request.GET.get('country')
+    print ("Load Cities for {0}".format(countryid))
+    regions = Region.objects.filter(Q(country_id=countryid) | Q(id=-1)).order_by('name')
+    
+    return render(request,'region_dropdown_list_options.html', {'regions':regions})
+
+def appelationEntry(request):
+    print("View!!")
+    if request.method == 'POST':
+        #print ('is a POST')
+        form = AppelationForm(request.POST)
+        if form.is_valid():
+            #print ('check is valid')
+            appelationname = request.POST.get('name')
+            countryid = request.POST.get('country')
+            pregionid = request.POST.get('pregion')
+            countryobject = Country.objects.get(pk=countryid)
+            print(countryid)
+            appeletionname = str(Region.objects.filter(country_id=countryid).values('name')).strip()
+            for s in [s.strip() for s in appelationname.splitlines()]:
+                regionobject = Region(name=s, country = countryobject, parent_regionid = pregionid)
+                regionobject.save()
+            return HttpResponseRedirect("/wine/appelation/parentlist")
+    else:
+        #print ('must be a get')
+        form = AppelationForm()
+    #print ('retun to home.html')
+    return render(request, 'home.html', {'form': form})
+
+
 # Create your views here.
 #class ListAppelationView(ListView):
 #    model = Appelation
@@ -31,7 +67,9 @@ class IndexView(generic.ListView):
     template_name = 'index.html'
  
     def get_queryset(self):
-        return Country.objects.all()
+        data = Country.objects.all()
+        return { 'rowcount' : len(data),
+                 'data' : data ,}
 
 class RegionView(generic.ListView):
     # name of the object to be used in the index.html
@@ -48,7 +86,7 @@ class RegionEntry(CreateView):
     model = Region
     template_name='region_form.html'
     # the fields mentioned below become the entry rows in the generated form
-    fields = ['name']
+    fields = ['name','country']
 
 
 class AppelationView(generic.ListView):
@@ -57,14 +95,20 @@ class AppelationView(generic.ListView):
     template_name = 'index.html'
  
     def get_queryset(self):
-        return Appelation.objects.all()
+        data = Appelation.objects.all()
+        return { 'rowcount' : len(data),
+                 'data' : data ,}
 
 # view for the product entry page
 class AppelationEntry(CreateView):
-    model = Region
+    model = Appelation
     template_name='region_form.html'
     # the fields mentioned below become the entry rows in the generated form
-    fields = ['name','country']
+    fields = ['name','region']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
 
 
 # view for the product entry page

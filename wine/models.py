@@ -9,17 +9,7 @@ from django.db import models
 from django.apps import apps
 from django.urls import reverse
 
-class Appelation(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=50, blank=True, null=True)
-    countryid = models.IntegerField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Country(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=25, blank=True, null=True)
 
     def __str__(self):
@@ -28,45 +18,47 @@ class Country(models.Model):
     def get_absolute_url(self):
         return reverse('wine:index')
 
+class Region(models.Model):
+    name = models.CharField(max_length=100, blank=True, null=True)
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
+    parent_regionid = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Appelation(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Vineyard(models.Model):
+    name = models.CharField(max_length=100, blank=True, null=True)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.name
+
 class Flavor(models.Model):
     name = models.CharField(max_length=25, blank=True, null=True)
 
     def __str__(self):
         return self.name
 
+class Grape(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=25, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
 class GrapeFlavorProfile(models.Model):
-    id = models.IntegerField(primary_key=True)
-    regionid = models.IntegerField(blank=True, null=True)
-    grapeid = models.IntegerField(blank=True, null=True)
+    id = models.AutoField(primary_key=True)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
+    grape = models.ForeignKey(Grape, on_delete=models.SET_NULL, null=True)
     dmnt_flavors = models.TextField(blank=True, null=True)  # This field type is a guess.
 
     def __str__(self):
         return self.id
-
-
-class Region(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=25, blank=True, null=True)
-    parent_regionid = models.IntegerField(blank=True, null=True)
-    appelationid = models.IntegerField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Variety(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
-
-
-class Vineyard(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100, blank=True, null=True)
-    regionid = models.IntegerField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
 

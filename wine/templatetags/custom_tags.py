@@ -10,3 +10,7 @@ def table_sidebar():
         tableinfo = { 'name': str(e),'view':'{0}-view'.format(str(e).replace('wine_',''))}
         entries.append(tableinfo)
     return {'tables': entries}
+
+@register.inclusion_tag('home.html')
+def parent_region_list():
+    return views.parentlist
